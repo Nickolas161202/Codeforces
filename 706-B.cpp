@@ -9,25 +9,18 @@ void  readVector(const vector<T>& v){
     cout << "\n";
 }
 
-
-int binarySearch(vector<int>& shops, int target){
-    int left =  0;
-    int right = shops.size() -1;
-    int mid; 
-    while(left  < right){
-        mid = (left + right) /2;
-
-        if(target < shops[mid]){
-            right =  mid;
-        }
-        else if(target > shops[mid]){
-            left =  mid;
-        }
-        else{ return mid;}
+int binarySearch(const vector<int>& shops, int target) {
+    int left = 0, right = shops.size();
+    while(left < right) {
+        int mid = (left + right) / 2;
+        if(shops[mid] <= target)
+            left = mid + 1;
+        else
+            right = mid;
     }
-return left;
-    
-};
+    return left; // count of values ≤ target
+}
+
 
 int main()
 {
@@ -52,30 +45,13 @@ int main()
         shops.push_back(aux);
     }
     sort(shops.begin(), shops.end());
-    int l =  1;
-    readVector(shops); 
-    cout << days[0] << "\n" ;
 
     for(int i = 0; i < days.size(); i++){
 
-    cout << binarySearch(shops, days[i]);
+    cout << binarySearch(shops, days[i]) << "\n";
     }
     
     
-
-
-    
-
-
-
-
-
-
-    
-    
-  
-
-    
-    
-    
 }
+
+
