@@ -49,28 +49,16 @@ int main() {
     }
 
     for (const instance& ins : instances) {
-        vector<vector<int>> dp(
-            ins.N + 1,
-            vector<int>(ins.V + 1, 0)
-        );
+        vector<int> dp(ins.V);
 
-        for (int i = 1; i <= ins.N; i++) {
-            int coin = ins.coins[i - 1];
-
-            for (int j = 0; j <= ins.V; j++) {
-                // Não utilizar a moeda atual
-                dp[i][j] = dp[i - 1][j];
-
-                // Utilizar a moeda atual, se couber
-                if (coin <= j) {
-                    dp[i][j] = max(
-                        dp[i][j],
-                        coin + dp[i - 1][j - coin]
-                    );
-                }
+        for(const int& coin: ins.coins){
+            for (int j = ins.V; V < coin; j++)
+            {
+                dp[j] = max(dp[j], coin + dp[j - coin]);
             }
+            
         }
-        if(dp[ins.N][ins.V] == ins.V){
+        if(dp[ins.V] == ins.V){
             cout << "sim" << '\n';
         }
         else{
