@@ -20,47 +20,68 @@ int p(int j, int t, vector<int> coins) {
     return a;
     
 } 
+template <typename T>
+void readVector(const vector<T>& v) {
+    for (int i = 0; i < v.size(); i++) {
+        cout << v[i] << " ";
+    }
+}
 
-int main(){
+
+int main() {
     int V, N;
-    V = N = 1;
-    instance aux;
     vector<instance> instances;
-    while (V != 0 && N!= 0)
-    {
-        cin >> V >> N;
-        vector<int> coins(N);
-        for (int i = 0; i < N; i++)
-        {
-            cin >> coins[i];
-        }
-        sort(coins.begin(), coins.end());
+
+    while (cin >> V >> N) {
+        if (V == 0 && N == 0)
+            break;
+
+        instance aux;
         aux.V = V;
         aux.N = N;
-        aux.coins =  coins;
+        aux.coins.resize(N);
+
+        for (int i = 0; i < N; i++) {
+            cin >> aux.coins[i];
+        }
+
         instances.push_back(aux);
     }
-    
- // p(j) = todas as moedas compatíveis com j
- //opt(j) = max(p(j) + j, p(j-1))
-    int pj;
-    for (instance ins : instances)
-    {   
-        vector<int> dp(ins.N +1);
-        
-        for (int i = 1; i <= ins.N; i++)
-        {   
-         
-            dp[i] = max(dp[i-1], )
+
+    for (const instance& ins : instances) {
+        vector<vector<int>> dp(
+            ins.N + 1,
+            vector<int>(ins.V + 1, 0)
+        );
+
+        for (int i = 1; i <= ins.N; i++) {
+            int coin = ins.coins[i - 1];
+
+            for (int j = 0; j <= ins.V; j++) {
+                // Não utilizar a moeda atual
+                dp[i][j] = dp[i - 1][j];
+
+                // Utilizar a moeda atual, se couber
+                if (coin <= j) {
+                    dp[i][j] = max(
+                        dp[i][j],
+                        coin + dp[i - 1][j - coin]
+                    );
+                }
+            }
         }
-        
+        if(dp[ins.N][ins.V] == ins.V){
+            cout << "sim" << '\n';
+        }
+        else{
+            cout << "não" << '\n';
+        }
     }
-    
-    
-    
-    
 
-
-
-
+    return 0;
 }
+    
+    
+    
+    
+    

@@ -38,7 +38,7 @@ int p(job j, vector<job> jobs, int n){
     int mid;
     while (start != end)
     {
-        int mid = n/2;cle
+        int mid = n/2;
         if(jobs[mid].end > j.start){
             end  = mid;
             cout << jobs[end].start;
