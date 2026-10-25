@@ -47,14 +47,17 @@ int main() {
 
         instances.push_back(aux);
     }
-
+    int include , exclude;
+    include = exclude = 0;
     for (const instance& ins : instances) {
-        vector<int> dp(ins.V);
-
-        for(const int& coin: ins.coins){
-            for (int j = ins.V; V < coin; j++)
-            {
-                dp[j] = max(dp[j], coin + dp[j - coin]);
+        vector<int> dp(ins.V + 1, 0);
+        for (const int& coin : ins.coins) {
+            for (int j = ins.V; j > 0; j-- ) {
+                if (coin <= j) {
+                    include = coin + dp[j - coin];
+                    exclude = dp[j];
+                    dp[j] = max(include, exclude);
+                }
             }
             
         }
@@ -62,7 +65,7 @@ int main() {
             cout << "sim" << '\n';
         }
         else{
-            cout << "não" << '\n';
+            cout << "nao" << '\n';
         }
     }
 
