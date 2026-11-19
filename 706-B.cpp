@@ -9,6 +9,7 @@ void  readVector(const vector<T>& v){
     cout << "\n";
 }
 
+
 int binarySearch(const vector<int>& shops, int target) {
     int left = 0, right = shops.size();
     while(left < right) {
